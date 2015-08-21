@@ -1,7 +1,7 @@
 require 'pry'
 
 class List
-  attr_accessor( :name, :item_array) #(paren are optional here)
+  attr_accessor :name, :item_array #(paren are optional here)
 
   def initialize(name)
     @name = name
@@ -9,7 +9,7 @@ class List
   end
 
   def display_menu
-    while choice != '5'
+    
       puts """ 
     What would you like to do?
       1. Display List
@@ -19,6 +19,7 @@ class List
       5. Exit
       """ #Triple quotes """ keeps format from changing
       choice = gets.strip
+      while choice != '5'
       if choice == '1'
         display_list
       elsif  choice == '2'
@@ -27,9 +28,17 @@ class List
         puts 'Add a description: '
         description = gets.strip
         add_item(item_name, description)
-          
-
       elsif choice == '3'
+        display_list
+        puts 'Select item to remove: '
+        item_name = gets.strip
+        remove_item(item_name)
+          
+        
+
+      elsif choice == '4' #Mark item as complete
+
+      else #emergency exit clause
             
       end
 
@@ -38,7 +47,7 @@ class List
   end
 
     def add_item(name, description)
-    @item_array << Item.new(name, description) #need (name) to call value
+      @item_array << Item.new(name, description) #need (name) to call value
     # << is called push, or shuttle operator.
     #The scope of name, and description are local,
     #as such they could be renamed and still work
@@ -46,7 +55,11 @@ class List
 
     def display_list # "#{}" is called interpolation
         @item_array.each do |item|
-        puts item.item_name + ' -- ' + item.description
+        puts item + '. ' + item.item_name + ' -- ' + item.description
+    end
+
+    def remove_item(choice)
+
     end
   end
 
@@ -64,7 +77,12 @@ class Item
   end
 end
 
-#binding.pry
+l = List.new("list stuff")  #diag
+l.add_item('milk', 'whole') #diag
+l.add_item('bread', 'wheat') #diag
+# choice = "1" diag
+
+binding.pry
 
 
 
