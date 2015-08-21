@@ -9,7 +9,7 @@ class List
   end
 
   def display_menu
-    while true
+    while choice != '5'
       puts """ 
     What would you like to do?
       1. Display List
