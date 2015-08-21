@@ -1,4 +1,4 @@
-require 'pry'
+#require 'pry'
 
 class List
   attr_accessor :name, :item_array, :choice #(paren are optional here)
@@ -27,10 +27,14 @@ class List
         item_name = gets.strip
         remove_item(item_name)
         options_list
-      elsif choice == '4' #Mark item as complete
-
+      elsif @choice == '4' #Mark item as complete
+        puts 'Select item to mark done: '
+        completed_item = gets.strip
+        item_done(completed_item)
+        options_list
       else #emergency exit clause
-            
+          puts "Not a valid option!"
+          options_list
       end
     end  #Do I have enought 'end' to account for all starts?
   end
@@ -61,21 +65,27 @@ class List
         # @choice = gets.strip
     end
 
+    def item_done(completed)
+      @item_array.map! { |item|
+        if(item.item_name == completed)
+          Item.new(item.item_name, 'Done')
+        else
+          item
+        end #end of if loop!
+        }
+    end #item_done
+
     def remove_item(choice)
       @item_array.each do |item|
         if item.item_name == choice
           @item_array.delete(item)
         else
-          puts 'Something went horribly wrong!'
+          item
         end
       end
     end
-
   end
-
 end
-
-
 
 class Item
   attr_accessor :item_name, :description
@@ -87,18 +97,15 @@ class Item
   end
 end
 
-l = List.new("list stuff")  #diag
-l.add_item('milk', 'whole') #diag
-l.add_item('bread', 'wheat') #diag
-# choice = "1" diag
+#l = List.new("list stuff")  #diag
+#l.add_item('milk', 'whole') #diag
+#l.add_item('bread', 'wheat') #diag
 
 #Welcome message
-#Generate emply list ?
-#Display Menu of options
-#Execute option chosen
-#Repeat?
-binding.pry
-
-
-
-
+puts "Welcome to your list manager!"
+puts "Please name your list: "
+list_name = gets.strip
+new_list = List.new(list_name)
+new_list.display_menu
+#Generate emply list, yes for class list to work
+#binding.pry
