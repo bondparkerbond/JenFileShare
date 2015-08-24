@@ -1,39 +1,39 @@
 class Game
-  attr_accessor :unrolled, :user1_choice
+  attr_accessor :unrolled, :user_choice
 
   def initialize
     @unrolled = [1,2,3,4,5,6]
-    @user1_choice = []
+    @user_choice = []
   end
 
   def roll 
     5.times do
-      @user1_choice << @unrolled.sample
+      @user_choice << @unrolled.sample
     end # goes to times loop
-    puts "You rolled: #{@user1_choice}"
+    puts "You rolled: #{@user_choice}"
     puts "Type the dice you want to keep, separated by commas, no spaces"
-    @user1_choice = gets.strip.split(",")
-    puts "#{@user1_choice}" #take out for final code!!!
+    @user_choice = gets.strip.split(",")
+    puts "#{@user_choice}" #take out for final code!!!
     #while true
-      if @user1_choice.length < 5
-        (5 - @user1_choice.length).times do
-          @user1_choice << unrolled.sample.to_s
+      if @user_choice.length < 5
+        (5 - @user_choice.length).times do
+          @user_choice << unrolled.sample.to_s
         end #goes to times loop
-        puts "Your second roll is: #{@user1_choice}"
+        puts "Your second roll is: #{@user_choice}"
         puts "Type the dice you want to keep, separated by commas, no spaces"
-        @user1_choice = gets.strip.split(",")
-        puts "#{@user1_choice}" #take out for final code!!!
+        @user_choice = gets.strip.split(",")
+        puts "#{@user_choice}" #take out for final code!!!
         
-        if @user1_choice.length < 5
-          (5 - @user1_choice.length).times do
-            @user1_choice << unrolled.sample.to_s
+        if @user_choice.length < 5
+          (5 - @user_choice.length).times do
+            @user_choice << unrolled.sample.to_s
           end #times loop
-        elsif @user1_choice.length > 5
+        elsif @user_choice.length > 5
         #  @cheat = "1"
           puts "There are only 5 dice, what are you doing?"
         else #exiting after second roll
         end #for innermost if loop
-        elsif @user1_choice.length > 5
+        elsif @user_choice.length > 5
         #  @cheat = "1"
           puts "There are only 5 dice, what are you doing?"
 
@@ -42,30 +42,28 @@ class Game
       end #outer if loop
     #end#ending while???
     #puts "Your final roll is (all three choices): #{@user1_choice}"
-    @cheat = @user1_choice.length
+    @cheat = @user_choice.length
   end # goes to method
 def turn
-  @user1_choice = []
+  @user_choice = []
   roll
   if @cheat != 5 
     puts "cheater"
-    @user1_choice =[]
+    @user_choice =[]
     roll
   else
-    puts "Your final roll is (all three choices): #{@user1_choice}"
+    puts "Your final roll is (all three choices): #{@user_choice}"
   end #end of cheat end loop
 end #end of turn method
 end #end of game class
 
 
-
 class Player
-  attr_accessor :name, :scorecard, :total_score
+  attr_accessor :name, :scorecard
 
   def initialize (name)
     @name = name
     @scorecard = []
-    @total_score = []
   end #end of player class initialize method
 
   def calculate_score
@@ -74,9 +72,9 @@ class Player
 end #end of player class
 
 class ScoreCard
-  attr_accessor :scorecard,
+  attr_accessor :scorecard, :scoring_options, :total_score
 
-  def initialize (scorecard)
+  def initialize
     @scorecard = {
       upper_section: {
         aces: 0,
@@ -86,7 +84,7 @@ class ScoreCard
         fives: 0,
         sixes: 0,
       },
-      lower_sections: {
+      lower_section: {
         three_of_a_kind: 0,
         four_of_a_kind: 0,
         full_house: 0,
@@ -96,9 +94,32 @@ class ScoreCard
         chance: 0, 
       }
     }
-end #end of initialize method
+    @scoring_options = { 
+      upper_section: {
+        aces: 'Total of Aces Only',
+        twos: 'Total of Twos Only',
+        threes: 'Total of Threes Only',
+        fours: 'Total of Fours Only',
+        fives: 'Total of Fives Only',
+        sixes: 'Total of Sixes Only'
+      },
+      lower_section: {
+        three_of_a_kind: 'Total of all Five Dice',
+        four_of_a_kind: 'Total of all Five Dice',
+        full_house: '25 Points',
+        small_straight: '30 Points',
+        large_straight: '40 Points',
+        yahtzee: '50 Points',
+        chance: 'Total of all Five Dice'
+      }
+    }
+    @total_score = 0
+  end #end of initialize method
 
-
+  # def aces(roll)
+  #   num_of_aces = 
+  #   @total_score += num_of_aces
+  # end
 
 end #end of ScoreCard class!
 
