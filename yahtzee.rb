@@ -132,59 +132,117 @@ class ScoreCard
 
 #Upper Section Methods
   def aces(roll)
-    num_of_aces = 
+    num_of_aces = 0
+    roll.each do |value|
+      if value == '1'
+        num_of_aces += 1
+      else
+        value
+      end
+    end
     @total_score += num_of_aces
   end
 
   def twos(roll)
-    #to add in later
-  end #end of twos method
+    num_of_twos = 0
+    roll.each do |value|
+      if value == '2'
+        num_of_twos += 2
+      else
+        value
+      end
+    end
+    @total_score += num_of_twos
+  end
 
   def threes(roll)
-    #to add in later
-  end #end of threes method
+    num_of_threes = 0
+    roll.each do |value|
+      if value == '3'
+        num_of_threes += 3
+      else
+        value
+      end #if loop
+    end #do loop
+    @total_score += num_of_threes
+  end #method
 
   def fours(roll)
-    #to add in later
-  end #end of fours method
+    num_of_fours = 0
+    roll.each do |value|
+      if value == '4'
+        num_of_fours += 4
+      else
+        value
+      end #if loop
+    end #do loop
+    @total_score += num_of_fours
+  end #method
 
   def fives(roll)
-    #to add in later
-  end #end of fives method
+    num_of_fives = 0
+    roll.each do |value|
+      if value == '5'
+        num_of_fives += 5
+      else
+        value
+      end #if loop
+    end #do loop
+    @total_score += num_of_fives
+  end #method
 
   def sixes(roll)
-    #to add in later
-  end #end of sixes method
+    num_of_sixes = 0
+    roll.each do |value|
+      if value == '6'
+        num_of_sixes += 6
+      else
+        value
+      end #if loop
+    end #do loop
+    @total_score += num_of_sixes
+  end #method
 
 # Lower Section Methods
-   # def three_of_a_kind(roll)
-    # to add in later
-   # end #end of three of a kind method
+  def three_of_a_kind(roll)
+    score = 0
+    roll.each do |value|
+      score += value.to_i
+    end  #each
+    @total_score += score
+  end #method
 
-  # def four_of_a_kind(roll)
-    # to add in later
-  # end #end of four of a kind method
+  def four_of_a_kind(roll)
+    score = 0
+    roll.each do |value|
+      score += value.to_i
+    end #each
+    @total_score += score
+  end #method
 
-  # def full_house(roll)
-    # to add in later
-  # end #end of full house method
+  def full_house
+    @total_score += 25
+  end #method
 
-  # def small_straight(roll)
-    # to add in later
-  # end #end of small_straight method
+  def small_straight
+    @total_score += 30
+  end #method
 
-  # def large_straight(roll)
-    # to add in later
-  # end #end of large_straight method
+  def large_straight
+    @total_score += 40
+  end #method
 
-  # def yahtzee(roll)
-  # to add in later, repeatable?
-  # end #end of yahtzee method
+  def yahtzee
+    @total_score += 50
+  end #method
 
-  # def chance(roll)
-    # to add in later
-  # end #end of chance method
-
+  def chance(roll)
+    score = 0
+    roll.each do |value|
+      score += value.to_i
+    end #each
+    @total_score += score
+  end #method
 
 
 
