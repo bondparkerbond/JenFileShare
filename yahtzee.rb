@@ -4,7 +4,6 @@ class Game
   def initialize
     @unrolled = [1,2,3,4,5,6]
     @user1_choice = []
-    #@cheat = "0"
   end
 
   def roll 
@@ -55,11 +54,55 @@ def turn
   else
     puts "Your final roll is (all three choices): #{@user1_choice}"
   end #end of cheat end loop
-end #while @cheat == "0"
-
-
-
+end #end of turn method
 end #end of game class
+
+
+
+class Player
+  attr_accessor :name, :scorecard, :total_score
+
+  def initialize (name)
+    @name = name
+    @scorecard = []
+    @total_score = []
+  end #end of player class initialize method
+
+  def calculate_score
+    #to be written later
+  end # end of method calculate_score
+end #end of player class
+
+class ScoreCard
+  attr_accessor :scorecard,
+
+  def initialize (scorecard)
+    @scorecard = {
+      upper_section: {
+        aces: 0,
+        twos: 0,
+        threes: 0,
+        fours: 0,
+        fives: 0,
+        sixes: 0,
+      },
+      lower_sections: {
+        three_of_a_kind: 0,
+        four_of_a_kind: 0,
+        full_house: 0,
+        small_straight: 0,
+        large_straight: 0,
+        yahtzee: 0,
+        chance: 0, 
+      }
+    }
+end #end of initialize method
+
+
+
+end #end of ScoreCard class!
+
+
 
 
 
