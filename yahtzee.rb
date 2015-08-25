@@ -58,7 +58,6 @@ end #end of turn method
 end #end of game class
 
 
-
 class Player
   attr_accessor :name, :scorecard
 
@@ -78,9 +77,8 @@ class Player
 end #end of player class
 
 
-
 class ScoreCard
-  attr_accessor :scorecard, :scoring_options, :total_score
+  attr_accessor :scorecard, :scoring_options, :total_score, :choice
 
   def initialize
     @scorecard = {
@@ -103,32 +101,29 @@ class ScoreCard
       }
     }
     @scoring_options = { 
-      upper_section: {
-        aces: 'Total of Aces Only',
-        twos: 'Total of Twos Only',
-        threes: 'Total of Threes Only',
-        fours: 'Total of Fours Only',
-        fives: 'Total of Fives Only',
-        sixes: 'Total of Sixes Only'
-      },
-      lower_section: {
-        three_of_a_kind: 'Total of all Five Dice',
-        four_of_a_kind: 'Total of all Five Dice',
-        full_house: '25 Points',
-        small_straight: '30 Points',
-        large_straight: '40 Points',
-        yahtzee: '50 Points',
-        chance: 'Total of all Five Dice'
-      }
-    }
+        '0' => ['0', 'Chance', 'Total of all Five Dice'],
+        '1' => ['1', 'Aces', 'Total of Aces Only'],
+        '2' => ['2', 'Twos', 'Total of Twos Only'],
+        '3' => ['3', 'Threes', 'Total of Threes Only'],
+        '4' => ['4', 'Fours', 'Total of Fours Only'],
+        '5' => ['5', 'Fives', 'Total of Fives Only'],
+        '6' => ['6', 'Sixes', 'Total of Sixes Only'],
+        '7' => ['7', 'three_of_a_kind', 'Total of all Five Dice'],
+        '8' => ['8', 'four_of_a_kind', 'Total of all Five Dice'],
+        '9' => ['9', 'full_house', '25 Points'],
+        '10' => ['10', 'small_straight', '30 Points'],
+        '11' => ['11', 'large_straight', '40 Points'],
+        '12' => ['12', 'yahtzee', '50 Points']
+        }
+    @choice = "0" #initializing choice variable
     @total_score = 0
   end #end of initialize method
 
-  def testing
-    puts "Test Script"
-    #puts "#{@scorecard}"
-    puts "#{@scoring_options}"
-  end #end of testing method
+  # def testing
+  #   puts "Test Script"
+  #   #puts "#{@scorecard}"
+  #   puts "#{@scoring_options}"
+  # end #end of testing method
 
 #Upper Section Methods
   def aces(roll)
@@ -244,24 +239,36 @@ class ScoreCard
     @total_score += score
   end #method
 
+  def list_options
+    puts " " #Optional blank line for improved layout
+    @scoring_options.each do |number, description|
+      puts "#{description[0]}. #{description[1]} - #{description[2]}" 
+    end #do loop
+  end #list options method
 
+  def select_option
+    puts "Please type score choice number: "
+    @choice = gets.strip
+    puts "#{@choice}"
+    puts "#{@scoring_options[(@choice)]}"
+    @scoring_options.delete(choice)
+    # @scoring_options.delete_if{|key| key == ("2")}
+    # @scoring_options.delete(@choice.to_s)
+  end #end of select method
 
 end #end of ScoreCard class!
 
 
-
-
-
 game = Game.new
 game.turn
-#scorecard = ScoreCard.new
+scorecard = ScoreCard.new
 #scorecard.testing #prints test scripts
-
-
-
-
-
-
+scorecard.list_options
+scorecard.select_option#Need to define method to iterate this
+scorecard.list_options
+scorecard.select_option
+scorecard.list_options
+scorecard.select_option
 
 
 
