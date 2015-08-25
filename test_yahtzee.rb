@@ -1,18 +1,20 @@
 require 'pry'
 
 class Game
-  attr_accessor :unrolled, :user_roll
+  attr_accessor :unrolled, :user_roll, :players, :number_of_players
 
-  def initialize
+  def initialize(number_of_players)
     @unrolled = ['1', '2', '3', '4', '5', '6']
     @user_roll = []
+    @players = []
+    @number_of_players = number_of_players
   end
 
   def roll(number_of_dice)
     number_of_dice.times do
       @user_roll << @unrolled.sample
-    end # goes to times loop
-  end # goes to method
+    end 
+  end 
 
   def turn
     roll(5)
@@ -26,29 +28,49 @@ class Game
       @user_roll = gets.strip.split(",")
       if user_roll.length != 5
         roll(5 - user_roll.length)
-      end # inner if loop
-    end #outer if loop
+      end 
+    end
     puts "Your final roll is: #{@user_roll}"
-  end # turn method
-end #end of game class
+  end
+
+  def play
+    puts 'Please enter the name of the players: '
+    @number_of_players.times do |number|
+      puts "Name of player number #{number + 1}"
+      player_name = gets.chomp
+      new_player = Player.new(player_name)
+      @players << new_player
+    end
+    number_of_rounds = 0
+    while number_of_rounds != (12 * @number_of_players)
+      @number_of_players.times do |number|
+        puts "#{@players[number].name}'s turn"
+        turn
+        @players[number].scorecard.display_options(@user_roll)
+        puts """Your total score is #{@players[number].scorecard.calculate_score}
+                ****************************
+        """
+        number_of_rounds += 1
+        @user_roll = []
+      end
+    end
+    #evaluate a winner
+  end
+end 
 
 class Player
   attr_accessor :name, :scorecard
 
   def initialize (name)
     @name = name
-    @scorecard = []
-  end 
-
-  def calculate_score
-    #to be written later
+    @scorecard = ScoreCard.new
   end 
 end 
 
 class ScoreCard
   attr_accessor :scorecard, :scoring_options, :total_score
 
-  def initialize(user_roll)
+  def initialize
     @scorecard = {
         'aces' => 0,
         'twos' => 0,
@@ -82,10 +104,11 @@ class ScoreCard
       }
 
     @total_score = 0
-    @roll = user_roll
+    @roll = []
   end 
 
-def display_options
+def display_options(roll)
+  @roll = roll
   puts """Score Card
               option            description
             ---------------------------------
@@ -115,20 +138,17 @@ def display_options
     when 'four of a kind'
       four_of_a_kind(@roll)
     when 'full house'
-      full_house(@roll)
+      full_house
     when 'small straight'
-      small_straight(@roll)
+      small_straight
     when 'large straight'
-      large_straight(@roll)
+      large_straight
     when 'yahtzee'
-      yahtzee(@roll)
+      yahtzee
     when 'chance'
       chance(@roll)
     end
     @scoring_options.delete(choice)
-    puts "#{@scoring_options}" #test
-    puts "#{@scorecard}" 
-    puts "#{@total_score}" #test
   end 
 
   # upper scorecard methods
@@ -258,12 +278,27 @@ def display_options
     @total_score += score
   end  
 
-end #end of ScoreCard class!
+  def calculate_score
+    @total_score
+  end
+end 
 
-roll = ['2', '4', '5', '2', '3']
-scorecard = ScoreCard.new(roll)
-scorecard.display_options
-scorecard.display_options
+puts """
+Welcome to Yahtzee!
+*******************
+
+How many people are playing?
+"""
+
+number_of_players = gets.chomp.to_i
+game = Game.new(number_of_players)
+game.play
+
+# roll = ['2', '4', '5', '2', '3']
+# scorecard = ScoreCard.new(roll)
+# scorecard.display_options
+# scorecard.display_options
+# puts scorecard.calculate_score
 
 
 # game = Game.new
