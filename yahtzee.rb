@@ -1,9 +1,11 @@
 class Game
-  attr_accessor :unrolled, :user_choice
+  attr_accessor :unrolled, :user_choice, #:players, :number_of_players
 
   def initialize
     @unrolled = [1,2,3,4,5,6]
     @user_choice = []
+    #@players = []  #not sure if needed in this class
+    #@number_of_players = number_of_players
   end
 
   def roll 
@@ -43,39 +45,62 @@ class Game
     #end#ending while???
     #puts "Your final roll is (all three choices): #{@user1_choice}"
     @cheat = @user_choice.length
-  end # goes to method
-def turn
+  end # goes to roll method
+
+  def turn
   @user_choice = []
   roll
-  if @cheat != 5 
-    puts "cheater"
-    @user_choice =[]
-    roll
-  else
-    puts "Your final roll is (all three choices): #{@user_choice}"
-  end #end of cheat end loop
-end #end of turn method
+    if @cheat != 5 
+      puts "cheater"
+      @user_choice =[]
+      roll
+    else
+      puts "Your final roll is (all three choices): #{@user_choice}"
+    end #end of cheat end loop
+  end #end of turn method
+
+  def game_play
+   game = Game.new(number_of_players)
+  game.players #right???
+  end #end of game_play method
+
 end #end of game class
 
+#============================================
 
-class Player
-  attr_accessor :name, :scorecard
+class Playerz
+  attr_accessor :scorecard, :players, :number_of_players
 
-  def initialize (name)
-    @name = name
+  def initialize #(name)
+    #@name = name
     @scorecard = []
+    @players = []
+    @number_of_players = 1
   end #end of player class initialize method
 
-  def add_players
-    #will add in ability to add more players and name
-    player_1 = "Parker"
-  end #end of add player method
+  def number_of_players
+    puts "How many people are playing yahtzee?"
+    @number_of_players = gets.strip.to_i
+  end #end of method number of players
+
+  def players
+    puts 'Please type the player name- '
+    @number_of_players.times do |number|
+      puts "Name of player number #{number +1}: "
+      player_name = gets.strip.downcase
+      new_player = (player_name) #only need to call class if in another class
+      @players << new_player
+      puts "#{@players}"
+    end #end of do loop
+  end #end of players method
 
   def calculate_score
     #to be written later
   end # end of method calculate_score
+
 end #end of player class
 
+#==========================================
 
 class ScoreCard
   attr_accessor :scorecard, :scoring_options, :total_score, :choice
@@ -258,17 +283,21 @@ class ScoreCard
 
 end #end of ScoreCard class!
 
+playerz = Playerz.new
+# playerz = Playerz.new
+playerz.number_of_players
+playerz.players
 
-game = Game.new
-game.turn
-scorecard = ScoreCard.new
-#scorecard.testing #prints test scripts
-scorecard.list_options
-scorecard.select_option#Need to define method to iterate this
-scorecard.list_options
-scorecard.select_option
-scorecard.list_options
-scorecard.select_option
+# game = Game.new
+# game.turn
+# scorecard = ScoreCard.new
+# #scorecard.testing #prints test scripts
+# scorecard.list_options
+# scorecard.select_option#Need to define method to iterate this
+# scorecard.list_options
+# scorecard.select_option
+# scorecard.list_options
+# scorecard.select_option
 
 
 
